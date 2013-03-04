@@ -96,7 +96,7 @@ if ismember('z',flags); reconAllBatch(par); end
 %for t = 1:length(par.Tasks)
     if ismember('p',flags); PM_mod_spec(par); end
     if ismember('e',flags); PM_mod_est(par); end
-    if ismember('t',flags); PM_setcontrastsPerc(par); end
+    if ismember('t',flags); PM_setcontrasts(par); end
 %end
 
 if ismember('b',flags); PM_EstimateIndividualBetas(par); end

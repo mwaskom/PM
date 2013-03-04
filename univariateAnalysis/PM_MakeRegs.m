@@ -16,6 +16,7 @@ end
 
 qqq = load(par.classmat);
 [res] = PM_classificationPostProcessingMnemonicImproved(qqq.res);
+thisSub = find(par.subNo == qqq.res.subjArray);
 
 perf_set = {'cor' 'inc'};
 class_set = {'face' 'house'};
@@ -23,10 +24,9 @@ resp_set = {'resp_face' 'resp_house'};
 
 i = 0;
 
-[~, thisAnalysis] = fileparts(par.analysisdir);
-idx.inClassifier = res.resS.idxOnsets_test_in_classifier;
+idx.inClassifier = res.sub(thisSub).S.idxOnsets_test_in_classifier;
 
-if strcmp(thisAnalysis, 'AnalysisRetByRREv')
+if strcmp(par.thisAnalysis, 'AnalysisRetByRREv')
     for l=1:length(class_set)
         for p=1:length(perf_set)
             

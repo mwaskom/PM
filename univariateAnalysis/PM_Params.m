@@ -403,6 +403,7 @@ par.classmat = fullfile(par.exptdir, '/fmri_data/mvpa_files/trainTestRet_balance
 par.meanfuncdir = fullfile(par.funcdir, 'meanFuncs');
 %par.analysisdir = fullfile(par.subdir, 'analysis_retBinaryConf');
 par.analysisdir = fullfile(par.subdir, 'AnalysisRetByRREv');
+[~, par.thisAnalysis] = fileparts(par.analysisdir);
 par.perc.analysisdir = fullfile(par.subdir, 'analysis_perc_parmodByConfAndRT_16Subs_leftOut');
 par.mnem.analysisdir = fullfile(par.subdir, 'analysis_mnem_parmodByConfAndRT_16Subs_leftOut');
 par.funcs3d = fullfile(par.subdir, 'funcs3d');

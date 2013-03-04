@@ -1,7 +1,7 @@
 function SA = PM_batchshebang(sa)
 
 if nargin<1
-    sa = 6:22;
+    sa = 1:22;
 end
 
 tasks = {'mnem'};
@@ -12,7 +12,7 @@ for C = sa
         par = PM_Params(C, tasks{t}, 1);
         
         if par.goodSub
-            PM_wholeshebang(par, 'rpe')
+            PM_wholeshebang(par, 't')
         end
     end
 end
