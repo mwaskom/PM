@@ -91,9 +91,7 @@ if ismember('a',flags); PM_ArtScansToOns(par); end
 if ismember('z',flags); reconAllBatch(par); end
 
 % Modeling, etc
-%if ismember('o',flags); par_makemoveonsets(par, (1:3)); end  %EDITED FOR TOP 3 CONF BINS!!
-    if ismember('v',flags); PM_MakeRegsLocMVPA(par); end
-    if ismember('r',flags); PM_MakeRegsPercByRTBins(par); end
+    if ismember('r',flags); PM_MakeRegs(par); end
     
 %for t = 1:length(par.Tasks)
     if ismember('p',flags); PM_mod_spec(par); end

@@ -394,23 +394,29 @@ function [] = PM_subUtil( par )
 
 %% Move old files into a special directory
 
-cd (par.subdir)
+% cd (par.subdir)
+% 
+% newDir = fullfile(par.subdir, 'oldAnalyses');
+% if ~exist(newDir, 'dir');
+%    mkdir(newDir); 
+% end
+% 
+% dP = dir('patLin*');
+% dA = dir('analysis*');
+% dB = dir('percBy*');
+% 
+% dT = [dP; dA; dB];
+% 
+% for i=1:length(dT)
+%     if isempty(strfind(dT(i).date, '2013'))
+%         movefile(dT(i).name, newDir);
+%     end    
+% end
 
-newDir = fullfile(par.subdir, 'oldAnalyses');
-if ~exist(newDir, 'dir');
-   mkdir(newDir); 
-end
+%% Move files back from special directory to initial directory
 
-dP = dir('patLin*');
-dA = dir('analysis*');
-dB = dir('percBy*');
+cd (fullfile(par.subdir, 'oldAnalyses'));
 
-dT = [dP; dA; dB];
-
-for i=1:length(dT)
-    if isempty(strfind(dT(i).date, '2013'))
-        movefile(dT(i).name, newDir);
-    end    
-end
+movefile('analysis_mvpa_mnemDM_3d', par.subdir);
 
 

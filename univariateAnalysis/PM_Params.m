@@ -399,10 +399,10 @@ par.rawNiiDir = fullfile(par.subdir, 'raw/niiArchives');
 par.niiDir = fullfile(par.subdir, 'rawNiis');
 par.logdir = fullfile(par.subdir, 'logfiles');
 par.artrepdir = fullfile(par.subdir, 'artRepairDM');
-par.classmat = fullfile(par.exptdir, '/fmri_data/mvpa_files/locToPerc.mat');
+par.classmat = fullfile(par.exptdir, '/fmri_data/mvpa_files/trainTestRet_balancedConf.mat');
 par.meanfuncdir = fullfile(par.funcdir, 'meanFuncs');
 %par.analysisdir = fullfile(par.subdir, 'analysis_retBinaryConf');
-par.analysisdir = fullfile(par.subdir, 'analysis_mnem_RT');
+par.analysisdir = fullfile(par.subdir, 'AnalysisRetByRREv');
 par.perc.analysisdir = fullfile(par.subdir, 'analysis_perc_parmodByConfAndRT_16Subs_leftOut');
 par.mnem.analysisdir = fullfile(par.subdir, 'analysis_mnem_parmodByConfAndRT_16Subs_leftOut');
 par.funcs3d = fullfile(par.subdir, 'funcs3d');
@@ -550,6 +550,8 @@ par.mask = {'/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/groupMas
 
 %% contrast vars
 par.constat = 'T';
+
+
 
 %% files
 

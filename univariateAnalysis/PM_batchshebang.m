@@ -1,23 +1,19 @@
 function SA = PM_batchshebang(sa)
 
 if nargin<1
-    sa = 1:22;
+    sa = 6:22;
 end
 
-tasks = {'perc'};
+tasks = {'mnem'};
 
 i=0;
 for C = sa
     for t =1:length(tasks)
-        par = PM_Params(C, tasks{t}, 0);
+        par = PM_Params(C, tasks{t}, 1);
         
-        PM_subUtil(par);
-%         if par.goodSub
-% 
-%             PM_wholeshebang(par, 'rpe')
-% 
-%         end
-        
+        if par.goodSub
+            PM_wholeshebang(par, 'rpe')
+        end
     end
 end
 
