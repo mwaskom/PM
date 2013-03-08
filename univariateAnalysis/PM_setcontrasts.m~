@@ -47,11 +47,7 @@ regNames = SPM.xX.name;
 % contain only one initial cap [A-Z]
 % current conditions:
 
-% idx.face = ~cellfun('isempty', strfind(regNames,'face'));
-% idx.house = ~cellfun('isempty', strfind(regNames,'house'));
-% 
-% idx.bf1 = ~cellfun('isempty', strfind(regNames,'bf(1)'));
-% 
+
 idx.face = ~cellfun('isempty', strfind(regNames,'face'));
 idx.house = ~cellfun('isempty', strfind(regNames,'house'));
 
@@ -74,16 +70,60 @@ idx.rt = ~cellfun('isempty', strfind(regNames,'RT'));
 
 idx.ev = ~cellfun('isempty', strfind(regNames,'Ev'));
 
+idx.left = ~cellfun('isempty', strfind(regNames,'Left'));
+idx.right = ~cellfun('isempty', strfind(regNames,'Right'));
 
-con.faceCorEv = idx.ev .* idx.face .* idx.cor;
-con.houseCorEv = idx.ev .* idx.house .* idx.cor;
-con.evCor = idx.ev .* idx.cor;
-con.faceCorEvVsHouseCorEv = idx.ev .* (idx.face - idx.house) .* idx.cor;
- 
+if strcmp(par.thisAnalysis, 'AnalysisRetByRREv')
+    con.faceCorEv = idx.ev .* idx.face .* idx.cor;
+    con.houseCorEv = idx.ev .* idx.house .* idx.cor;
+    con.evCor = idx.ev .* idx.cor;
+    con.faceCorEvVsHouseCorEv = idx.ev .* (idx.face - idx.house) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'AnalysisRetByRREv_signedByHand')
+    con.leftCorEv = idx.ev .* idx.left .* idx.cor;
+    con.rightCorEv = idx.ev .* idx.right .* idx.cor;
+    con.evCor = idx.ev .* idx.cor;
+    con.rightCorEvVsLeftCorEv = idx.ev .* (idx.left - idx.right) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'analysisRetByConf')
+    con.faceCorConf = idx.conf .* idx.face .* idx.cor;
+    con.houseCorConf = idx.conf .* idx.house .* idx.cor;
+    con.CorConf = idx.conf .* idx.cor;
+    con.faceCorConfVsHouseCorConf = idx.conf .* (idx.face - idx.house) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'analysisRetByConf_signedByHand')
+    con.rightCor = ~idx.conf .* idx.right .* idx.cor;
+    con.leftCor = ~idx.conf .* idx.left .* idx.cor;
+    con.leftVsRightCor = ~idx.conf .* (idx.left - idx.right) .* idx.cor;
+    con.leftCorConf = idx.conf .* idx.left .* idx.cor;
+    con.rightCorConf = idx.conf .* idx.right .* idx.cor;
+    con.CorConf = idx.conf .* idx.cor;
+    con.rightCorConfVsLeftCorConf = idx.conf .* (idx.left - idx.right) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'analysisRetByRT')
+    con.faceCorRT = idx.rt .* idx.face .* idx.cor;
+    con.houseCorRT = idx.rt .* idx.house .* idx.cor;
+    con.CorRT = idx.rt .* idx.cor;
+    con.faceCorRTVsHouseCorRT = idx.rt .* (idx.face - idx.house) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'analysisRetByRT_signedByHand')
+    con.rightCorRT = idx.rt .* idx.right .* idx.cor;
+    con.leftCorRT = idx.rt .* idx.left .* idx.cor;
+    con.CorRT = idx.rt .* idx.cor;
+    con.rightCorRTVsLeftCorRT = idx.rt .* (idx.right - idx.left) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'analysisPercByConf')
+    con.faceCorConf = idx.conf .* idx.face .* idx.cor;
+    con.houseCorConf = idx.conf .* idx.house .* idx.cor;
+    con.CorConf = idx.conf .* idx.cor;
+    con.faceCorConfVsHouseCorConf = idx.conf .* (idx.face - idx.house) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'analysisPercByConf_signedByHand')
+    con.rightCor = ~idx.conf .* idx.right .* idx.cor;
+    con.leftCor = ~idx.conf .* idx.left .* idx.cor;
+    con.leftVsRightCor = ~idx.conf .* (idx.left - idx.right) .* idx.cor;
+    con.leftCorConf = idx.conf .* idx.left .* idx.cor;
+    con.rightCorConf = idx.conf .* idx.right .* idx.cor;
+    con.CorConf = idx.conf .* idx.cor;
+    con.rightCorConfVsLeftCorConf = idx.conf .* (idx.left - idx.right) .* idx.cor;
+else
+    error ('unrecognized analysis type')
+end
     
 fn = fieldnames(idx);
-
-
 
 
 fn_con = fieldnames(con);
@@ -107,31 +147,9 @@ for Tt = 1:length(cnames)
     con_name{Tt} = cnames{Tt};
 
     con_vals{Tt} = double(cvals{Tt});
-    
-%     %puts two zeros between each element of cvals (to account for
-%     %inclusion of time and dispersion derivatives).
-%     val_processor_h = vertcat(cvals{Tt}, zeros(2, length(cvals{Tt})));
-%     val_processor = horzcat(val_processor_h(:))';
-% 
-%     
-%     con_vals{Tt} = val_processor;
-
-    %     some peace of mind (math check)
-%    if sum(con_vals{Tt}) ~= 0;
-%        error('lopsided contrast!!!');
-%    end
 
 end
 
-% any other fancy contrasts?
-% 
-% fnc = length(con_name);
-% nCnds = length(SPM.Sess.U);
-% 
-% con_vals{fnc+1}         = repmat([1 0 0], 1, nCnds);
-% con_name{fnc+1}         = 'allVsFix';
-% con_vals{fnc+2}          = repmat([-1 0 0], 1, nCnds);
-% con_name{fnc+2}         = 'fixVsAll';
 
 % put contrasts into SPM/write to file
 

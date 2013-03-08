@@ -7,12 +7,12 @@ end
 [~, SA] = PM_SA;
 gpar.subjArray = subjArray;
 
-gpar.conGroup = { 'AnalysisRetByRREv' };
+gpar.conGroup = { 'analysisRetByRT_signedByHand' };
 
 if ~isempty(leftOutPar)
-    gpar.tasks = {'AnalysisRetByRREv_16Subs'};
+    gpar.tasks = {'analysisRetByRT_signedByHand'};
 else
-    gpar.tasks = {'AnalysisRetByRREv_16Subs'};
+    gpar.tasks = {'analysisRetByRT_signedByHand'};
 end
 
 gpar.expt_dir = '/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/';

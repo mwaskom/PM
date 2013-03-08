@@ -1,4 +1,4 @@
-function [res, groupPsy, dat, datB] = PM_classificationPostProcessing(qqq, task)
+function [res, groupPsy, dat, datB] = PM_classificationPostProcessingMnemonicImproved(qqq)
 
 groupPsy = [];
 pnl = 1;
@@ -7,6 +7,7 @@ useResiduals = false;
 for s = 1:length(qqq.subj)
     
     subj_id = qqq.subjArray(s);
+    %[par idxB] = PM_mvpa_params(subj_id, 'mnem');
     
     par = PM_Params(subj_id, 'mnem', 0);
     

@@ -7,7 +7,7 @@ rtThresh = .25; %RT less than this thresh (in sec) are excluded from analysis
 %% read in appropriate data
 hands = {{'1' '2' '3' '4'} {'6' '7' '8' '9'} };
 certRatTrans = {[0 8 7 6 5 1 2 3 4 ] [0 1 2 3 4 8 7 6 5] [0 4 3 2 1 5 6 7 8]};
-
+handsTrans =  {hands hands {{'6' '7' '8' '9'} {'1' '2' '3' '4'}}};
 
 if ismember(par.substr, {'pm_120810' 'pm_060111'})
     retFileIdx = [1 3 4];
@@ -129,14 +129,16 @@ idx.house = reh.cond==2;
 % hand number is counterbalanced across subjects
 HN = RL(1).dat.S.retHandNum;
 CRTFunc = HN;
+idx.HN = HN;
 
- if strcmp(par.substr, 'pm_040611')
-     %for this subject during this session, I'm presuming that 
-     %the left box was in the right hand, and vice versa.  
-     %the data are completely consistent with this assumption...
-     HN = 2;
-     CRTFunc = 3;
- end
+if strcmp(par.substr, 'pm_040611')
+    %for this subject during this session, I'm presuming that
+    %the left box was in the right hand, and vice versa.
+    %the data are completely consistent with this assumption...
+    HN = 2;
+    CRTFunc = 3;
+    
+end
 
 
 % takes a raw reh.resp, a cell array of responses (1-4 and 5-9) and turn
@@ -162,6 +164,9 @@ h.idx.cor.House = idx.respHouse.*idx.house;
 % index of all correct and all incorrect trials
 idx.cor = idx.respFace.*idx.face + idx.respHouse.*idx.house;
 idx.inc = idx.respFace.*idx.house + idx.respHouse.*idx.face;
+
+idx.respLeft = ismember(reh.resp, handsTrans{CRTFunc}{1});
+idx.respRight = ismember(reh.resp, handsTrans{CRTFunc}{2});
 
 % index of trials for which an interpretable response was recorded
 idx.exceedsRTThresh = (reh.RT>rtThresh); %is the RT above a minimum threshold?

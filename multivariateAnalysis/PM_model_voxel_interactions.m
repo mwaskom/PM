@@ -13,12 +13,17 @@ groups = ones(1,size(groups_h,2));
 
 idxTrain = squeeze(get_group_as_matrix(subj,'selector', S.classSelector))==1;
 
+if ~isempty(S.portion)
+    part = S.portion;
+    idxThisTrain = idxTrain(part,:)';
+end
+
 for i=size(groups_h,1)
     idxTheseTrials = logical(groups_h(i,:));
     groups(idxTheseTrials) = i;
 end
 
-trainGroups = groups.*idxTrain';
+trainGroups = groups.*idxThisTrain';
 
 pThresh = S.intPThresh;
 
@@ -55,13 +60,14 @@ elseif S.interactionType==2 % interaction of all voxels among each other
     if S.intEst % perform feature selection on interaction features
         
         %important for dividing up the labor among different compute jobs.
-        if isempty(S.portion)
-            vxIts = 1:szP(1);
-        else
-            vxInit = round((S.portion(1)-1)*szP(1)/S.portion(2)+1);
-            vxFinal = round((S.portion(1))*szP(1)/S.portion(2));
-            vxIts = vxInit:vxFinal;
-        end
+        vxIts = 1:szP(1);
+%         if isempty(S.portion)
+%             vxIts = 1:szP(1);
+%         else
+%             vxInit = round((S.portion(1)-1)*szP(1)/S.portion(2)+1);
+%             vxFinal = round((S.portion(1))*szP(1)/S.portion(2));
+%             vxIts = vxInit:vxFinal;
+%         end
         
         for vx = vxIts
             
@@ -72,7 +78,11 @@ elseif S.interactionType==2 % interaction of all voxels among each other
             end
             
             %thisVol = origPat .* repmat(origPat(vx,:), szP(1),1);
-            thisVol = patsToInteract .* repmat(origPat(vx,:), size(patsToInteract,1),1);
+            if strcmp(S.multiVoxMethod, 'interaction')
+                thisVol = patsToInteract .* repmat(origPat(vx,:), size(patsToInteract,1),1);
+            elseif strcmp(S.multiVoxMethod, 'corr')
+                thisVol = corr(patsToInteract', origPat(vx,:)');
+            end
             
             toExclude = ismember(idxPatsToInteract, idxOrigPat(1:vx));
             

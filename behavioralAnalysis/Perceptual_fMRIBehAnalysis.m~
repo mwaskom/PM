@@ -36,25 +36,25 @@ if isfield(trial_data,'response')
         % flipped.
         resp_ = ceil(resp/4);
         cresp_ = 4- (mod(resp-1, 4));
-        idx.respLeft = resp'>4.5;
-        idx.respRight = resp'<4.5;
+        idx.respLeft = resp>4.5;
+        idx.respRighy = resp<4.5;
     elseif ismember(par.substr, { 'pm_031711'})
         % for this subject confidence ratings are inverted.
         resp_ = 3-ceil(resp/4);
         cresp_ = mod(resp-1, 4) + 1;
-        idx.respLeft = resp'<4.5;
-        idx.respRight = resp'>4.5;
+        idx.respLeft = resp<4.5;
+        idx.respRighy = resp>4.5;
     elseif ismember(par.substr, { 'pm_042811_2'})
         % for this subject, the mapping is unique...
         resp_ = 3-ceil(resp/4);
         cresp_ = 5-ceil(abs(resp-4.5));
-        idx.respLeft = resp'<4.5;
-        idx.respRight = resp'>4.5;
+        idx.respLeft = resp<4.5;
+        idx.respRighy = resp>4.5;
     else
         resp_ = 3-ceil(resp/4);
         cresp_ = 4- (mod(resp-1, 4) );
-        idx.respLeft = resp'<4.5;
-        idx.respRight = resp'>4.5;
+        idx.respLeft = resp<4.5;
+        idx.respRighy = resp>4.5;
     end
     
 end
@@ -92,16 +92,16 @@ if all(isnan(resp_))
     valid_trials = 1 : trial_num;
 elseif ~all(isnan(resp_)) && all(isnan(cresp_))
         %if we collected direction choices but not certainty responses
-    valid_trials = (~isnan(resp_));
+    valid_trials = find(~isnan(resp_));
 else
         %if we collected both direction choices and certainty responses 
-    valid_trials = (~isnan(resp_) & ~isnan(cresp_));
+    valid_trials = find(~isnan(resp_) & ~isnan(cresp_));
 end
 
-% resp = resp(valid_trials);
-% resp_ = resp_(valid_trials);
-% cresp_ = cresp_(valid_trials);
-% trial_data = trial_data(valid_trials);
+resp = resp(valid_trials);
+resp_ = resp_(valid_trials);
+cresp_ = cresp_(valid_trials);
+trial_data = trial_data(valid_trials);
 time0 = cat(1, trial_data.time0);
 start_t = cat(1, trial_data.start_t);
 event_name = cat(1, trial_data.event_name);
@@ -124,11 +124,9 @@ coh_set_signed = unique(coh_signed);
 
 rt = cat(1,trial_data.rt);
 
-%certRat = certRat(valid_trials);
+certRat = certRat(valid_trials);
 %********************** XXXXXXXXXXXXXXX    
 %%
-idx.validTrials = valid_trials';
-
 idx.face = (stim_' == 1) .* (coh_'~=0);
 idx.house = (stim_' == 2) .* (coh_'~=0);
 
@@ -157,6 +155,8 @@ else
     idx.cleanResp = (idx.resp_face + idx.resp_house);
 end
 
+%idx.respLeft = 
+%idx.respRight =
 
 idx.coh_set = coh_set;
 idx.coh_set_pct = coh_set*100;
