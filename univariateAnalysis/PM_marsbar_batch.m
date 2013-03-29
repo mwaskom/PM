@@ -4,11 +4,11 @@ function subjects_tc = PM_marsbar_batch()
 
 %conds = {'face_cor_highconf' 'house_cor_highconf' 'face_cor_lowconf' 'house_cor_lowconf'};
 
-% conds = {'face_cor_conf1' 'house_cor_conf1' 'face_cor_conf2' 'house_cor_conf2' ...
-%      'face_cor_conf3' 'house_cor_conf3' 'face_cor_conf4' 'house_cor_conf4' };
+%conds = {'face_conf_1' 'house_conf_1' 'face_conf_2' 'house_conf_2' ...
+%      'face_conf_3' 'house_conf_3' 'face_conf_4' 'house_conf_4' };
 
-conds = {'face_cor_RT1' 'house_cor_RT1' 'face_cor_RT2'  'house_cor_RT2' ...
-    'face_cor_RT3' 'house_cor_RT3' 'face_cor_RT4' 'house_cor_RT4'};
+conds = {'face_RT1' 'house_RT1' 'face_RT2'  'house_RT2' ...
+     'face_RT3' 'house_RT3' 'face_RT4' 'house_RT4'};
      
 %  conds = {'face_RT1_cor' 'house_RT1_cor' 'face_RT2_cor' 'house_RT2_cor' ...
 %       'face_RT3' 'house_RT3' 'face_RT4' 'house_RT4' };
@@ -23,14 +23,17 @@ conds = {'face_cor_RT1' 'house_cor_RT1' 'face_cor_RT2'  'house_cor_RT2' ...
 
 %roi_names = {'rt_p005_leftAI.nii'	'rt_p005_leftMFG.nii'	'rt_p005_rightAI.nii'};
 %roi_names = {'conf_p005_left_AnG.nii'	'conf_p005_left_STG.nii' 'conf_p005_PCC.nii'	};
-roi_names = {'RT_p005_leftAI.nii'	'RT_p005_leftMFG.nii'	'RT_p005_rightAI.nii'};
+%roi_names = {'RT_p005_leftAI.nii'	'RT_p005_leftMFG.nii'	'RT_p005_rightAI.nii'};
 %roi_names = {'conf_p005_LeftTemporalLobe.nii' 'conf_p005_leftAnG.nii' 'conf_p005_PCC.nii'	'conf_p005_rightAnG.nii'};
 %roi_names = {'AnG_L_-39_-70_40_roi.mat' 'PCC_-6_-52_31_roi.mat' 'STG_L_-63_-46_1_roi.mat'};
 %roi_names = {'RT_LeftAI_-30_23_4_roi.mat' 'RT_RightAI_-30_23_4_roi.mat' 'RT_LeftMFG_-42_11_22_roi.mat'};
 %roi_names = {'PCC_roi.mat' 'rightAnG_roi.mat' 'leftAnG_roi.mat' 'leftTemporalLobe_roi.mat'};
 %roi_names = {'RT_Left_AI_-30_26_4_roi.mat'	'RT_RightAI_33_26_-2_roi.mat' 'RT_Left_MFG_-48_20_34_roi.mat'};
+%roi_names = {'RT_p005_LeftIFG.nii' 'RT_p005_rightAnG.nii'};
+roi_names = {'Conf_p005_PCC.nii' 'Conf_p005_rightMTL.nii' 'Conf_p005_leftMTL.nii' 'Conf_p005_rightParietal.nii'...
+    'Conf_p005_leftParietal.nii' 'Conf_p005_rightSFS_invConf.nii' 'Conf_p005_leftSTS.nii'};
 
-subjects = sa.sa16_Conf;
+subjects = sa.sa16_all;
  
 % for r = 1:length(roi_names)
 %     clusters_h{r} = [roi_dir '/' roi_names{r}];
@@ -133,7 +136,7 @@ for curr_subj=1:length(subjects), % go through the list of subjects
                 
             end
             
-            save(fullfile('/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/group_analyses/percMnemConj_parModByConfAndRT_16Subs/ROIs_RT', 'subjects_tc_mnemConfIndependent.mat'), 'subjects_tc');
+            save(fullfile('/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/group_analyses/percMnemConj_parModByRT/ROIs', 'subjects_tc_mnemRT_ConfROIs_Independent.mat'), 'subjects_tc');
     %end
         
         
@@ -195,8 +198,8 @@ for j=1:length(roi_names)
     end
     
     f_h = gcf;
-    cd('/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/group_analyses/percMnemConj_parModByConfAndRT_16Subs/ROIs_RT');
-    print(f_h, '-depsc', [subjects_tc(1).rois(j).roiName(1:(end-4)), '_mnemRTIndependentROIDef.eps'] )
+    cd('/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/group_analyses/percMnemConj_parModByConf/ROIs');
+    print(f_h, '-depsc', [subjects_tc(1).rois(j).roiName(1:(end-4)), '_mnemRTIndependentConfROIDef.eps'] )
     %errorbar(meanAct, steAct)
 end
 

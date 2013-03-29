@@ -12,7 +12,8 @@ for C = sa
         par = PM_Params(C, tasks{t}, 1);
         
         if par.goodSub
-            PM_wholeshebang(par, 'rpet')
+            %PM_subUtil(par);
+            PM_wholeshebang(par, 't')
         end
     end
 end

@@ -17,9 +17,9 @@ for i = 1:length(SA)
      end
     
         
-    
-    %analyze a given subject's retrieval data
-    [res, psyphys, idxG.sub{i}, gRes(i)] = Perceptual_fMRIBehAnalysis(par);
+    gRes = [];
+    %analyze a given subject's perceptual data
+    [res, psyphys, idxG.sub{i}] = Perceptual_fMRIBehAnalysis(par);
     %[res, psyphys] = Perceptual_fMRIBehAnalysis(par);
     idxG.sub{i}.subNo = par.subNo;
      

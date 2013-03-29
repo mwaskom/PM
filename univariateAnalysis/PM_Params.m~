@@ -399,12 +399,14 @@ par.rawNiiDir = fullfile(par.subdir, 'raw/niiArchives');
 par.niiDir = fullfile(par.subdir, 'rawNiis');
 par.logdir = fullfile(par.subdir, 'logfiles');
 par.artrepdir = fullfile(par.subdir, 'artRepairDM');
-par.classmat = fullfile(par.exptdir, '/fmri_data/mvpa_files/locToPerc.mat');
+par.classmat = fullfile(par.exptdir, '/fmri_data/mvpa_files/trainLocTestPerc_noFS.mat');
 par.meanfuncdir = fullfile(par.funcdir, 'meanFuncs');
-%par.analysisdir = fullfile(par.subdir, 'analysis_retBinaryConf');
-par.analysisdir = fullfile(par.subdir, 'analysis_perc_conf');
-par.perc.analysisdir = fullfile(par.subdir, 'analysis_perc_parmodByConfAndRT_16Subs_leftOut');
-par.mnem.analysisdir = fullfile(par.subdir, 'analysis_mnem_parmodByConfAndRT_16Subs_leftOut');
+%par.analysisdir = fullfile(par.subdir, 'AnalysisPercByPercEv');
+par.analysisdir = fullfile(par.subdir, 'analysis_mnem_RT_AcrossPerf');
+[~, par.thisAnalysis] = fileparts(par.analysisdir);
+%par.thisAnalysis = 'AnalysisPercByPercEv';
+par.perc.analysisdir = fullfile(par.subdir, 'analysisPercByAllConf_LeftOut');
+par.mnem.analysisdir = fullfile(par.subdir, 'analysisRetByAllConf_LeftOut');
 par.funcs3d = fullfile(par.subdir, 'funcs3d');
 par.FourDNiiDir = fullfile(par.funcdir, '4dniis');
 
@@ -550,6 +552,8 @@ par.mask = {'/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/groupMas
 
 %% contrast vars
 par.constat = 'T';
+
+
 
 %% files
 

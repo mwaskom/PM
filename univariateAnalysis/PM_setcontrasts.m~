@@ -1,4 +1,4 @@
-function PM_setcontrasts_Mnemonic(subpar)
+function PM_setcontrasts(subpar)
 % parSetContrasts(subpar)
 % Sets contrasts.
 % 
@@ -84,10 +84,18 @@ elseif strcmp(par.thisAnalysis, 'AnalysisRetByRREv_signedByHand')
     con.evCor = idx.ev .* idx.cor;
     con.rightCorEvVsLeftCorEv = idx.ev .* (idx.left - idx.right) .* idx.cor;
 elseif strcmp(par.thisAnalysis, 'analysisRetByConf')
-    con.faceCorConf = idx.conf .* idx.face .* idx.cor;
-    con.houseCorConf = idx.conf .* idx.house .* idx.cor;
-    con.CorConf = idx.conf .* idx.cor;
-    con.faceCorConfVsHouseCorConf = idx.conf .* (idx.face - idx.house) .* idx.cor;
+%     con.faceCorConf = idx.conf .* idx.face .* idx.cor;
+%     con.houseCorConf = idx.conf .* idx.house .* idx.cor;
+%     con.CorConf = idx.conf .* idx.cor;
+%     con.faceCorConfVsHouseCorConf = idx.conf .* (idx.face - idx.house) .* idx.cor;
+%     con.faceAllConf = idx.conf .* idx.face;
+%     con.houseAllConf = idx.conf .* idx.house;
+%     con.allConf = idx.conf;
+%     con.faceAllConfVsHouseAllConf = idx.conf .* (idx.face - idx.house);
+    con.faceIncConf = idx.conf .* idx.face .* idx.inc;
+    con.houseIncConf = idx.conf .* idx.house .* idx.inc;
+    con.IncConf = idx.conf .* idx.inc;
+    con.faceIncConfVsHouseCorConf = idx.conf .* (idx.face - idx.house) .* idx.inc;
 elseif strcmp(par.thisAnalysis, 'analysisRetByConf_signedByHand')
     con.rightCor = ~idx.conf .* idx.right .* idx.cor;
     con.leftCor = ~idx.conf .* idx.left .* idx.cor;
@@ -97,41 +105,112 @@ elseif strcmp(par.thisAnalysis, 'analysisRetByConf_signedByHand')
     con.CorConf = idx.conf .* idx.cor;
     con.rightCorConfVsLeftCorConf = idx.conf .* (idx.left - idx.right) .* idx.cor;
 elseif strcmp(par.thisAnalysis, 'analysisRetByRT')
-    con.faceCorRT = idx.rt .* idx.face .* idx.cor;
-    con.houseCorRT = idx.rt .* idx.house .* idx.cor;
-    con.CorRT = idx.rt .* idx.cor;
-    con.faceCorRTVsHouseCorRT = idx.rt .* (idx.face - idx.house) .* idx.cor;
+%     con.faceCorRT = idx.rt .* idx.face .* idx.cor;
+%     con.houseCorRT = idx.rt .* idx.house .* idx.cor;
+%     con.CorRT = idx.rt .* idx.cor;
+%     con.faceCorRTVsHouseCorRT = idx.rt .* (idx.face - idx.house) .* idx.cor;
+%     con.faceAllRT = idx.rt .* idx.face;
+%     con.houseAllRT = idx.rt .* idx.house;
+%     con.allRT = idx.rt;
+%     con.faceAllRTVsHouseAllRT = idx.rt .* (idx.face - 2*idx.house) ;
+    con.faceIncRT = idx.rt .* idx.face .* idx.inc;
+    con.houseIncRT = idx.rt .* idx.house .* idx.inc;
+    con.IncRT = idx.rt .* idx.inc;
+    con.faceIncRTVsHouseIncRT = idx.rt .* (idx.face - idx.house) .* idx.inc;
 elseif strcmp(par.thisAnalysis, 'analysisRetByRT_signedByHand')
     con.rightCorRT = idx.rt .* idx.right .* idx.cor;
     con.leftCorRT = idx.rt .* idx.left .* idx.cor;
     con.CorRT = idx.rt .* idx.cor;
     con.rightCorRTVsLeftCorRT = idx.rt .* (idx.right - idx.left) .* idx.cor;
 elseif strcmp(par.thisAnalysis, 'analysisPercByConf')
-    con.faceCorConf = idx.conf .* idx.face .* idx.cor;
-    con.houseCorConf = idx.conf .* idx.house .* idx.cor;
-    con.CorConf = idx.conf .* idx.cor;
-    con.faceCorConfVsHouseCorConf = idx.conf .* (idx.face - idx.house) .* idx.cor;
+    con.faceCorConf = idx.conf .* idx.face .* idx.cor; n.faceCorConf = 1;
+    con.houseCorConf = idx.conf .* idx.house .* idx.cor; n.houseCorConf = 1;
+    con.CorConf = idx.conf .* idx.cor; n.CorConf = 2; 
+    con.faceCorConfVsHouseCorConf = idx.conf .* (idx.face - idx.house) .* idx.cor; n.faceCorConfVsHouseCorConf = 2;
+    con.faceAllConf = idx.conf .* idx.face; n.faceAllConf = 2;
+    con.houseAllConf = idx.conf .* idx.house; n.houseAllConf = 1;
+    con.allConf = idx.conf; n.allConf = 4;
+    con.faceAllConfVsHouseAllConf = idx.conf .* (idx.face - idx.house); n.faceAllConfVsHouseAllConf = 4;
+    con.faceAllConf = idx.conf .* idx.face; n.faceAllConf = 2;
+    con.houseAllConf = idx.conf .* idx.house; n.houseAllConf = 2;
+    con.faceIncConf = idx.conf .* idx.face .* idx.inc; n.faceIncConf = 1;
+    con.houseIncConf = idx.conf .* idx.house .* idx.inc; n.houseIncConf = 1;
+    con.IncConf = idx.conf .* idx.inc; n.IncConf = 2;
+    con.faceIncConfVsHouseIncConf = idx.conf .* (idx.face - idx.house) .* idx.inc; n.faceIncConfVsHouseIncConf = 2; 
 elseif strcmp(par.thisAnalysis, 'analysisPercByConf_signedByHand')
     con.rightCor = ~idx.conf .* idx.right .* idx.cor;
     con.leftCor = ~idx.conf .* idx.left .* idx.cor;
     con.leftVsRightCor = ~idx.conf .* (idx.left - idx.right) .* idx.cor;
     con.leftCorConf = idx.conf .* idx.left .* idx.cor;
     con.rightCorConf = idx.conf .* idx.right .* idx.cor;
-    con.CorConf = idx.conf .* idx.cor;
+    con.corConf = idx.conf .* idx.cor;
     con.rightCorConfVsLeftCorConf = idx.conf .* (idx.left - idx.right) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'analysisPercByRT')
+%     con.faceCorRT = idx.rt .* idx.face .* idx.cor;
+%     con.houseCorRT = idx.rt .* idx.house .* idx.cor;
+%     con.CorRT = idx.rt .* idx.cor;
+%     con.faceCorRTVsHouseCorRT = idx.rt .* (idx.face - idx.house) .* idx.cor;
+%     con.faceAllRT = idx.rt .* idx.face;
+%     con.houseAllRT = idx.rt .* idx.house;
+%     con.allRT = idx.rt;
+%     con.faceAllRTVsHouseAllRT = idx.rt .* (idx.face - idx.house);
+    con.faceIncRT = idx.rt .* idx.face .* idx.inc;
+    con.houseIncRT = idx.rt .* idx.house .* idx.inc;
+    con.IncRT = idx.rt .* idx.inc;
+    con.faceIncRTVsHouseIncRT = idx.rt .* (idx.face - idx.house) .* idx.inc;
+elseif strcmp(par.thisAnalysis, 'analysisPercByRT_signedByHand')
+    con.leftCorRT = idx.rt .* idx.left .* idx.cor;
+    con.rightCorRT = idx.rt .* idx.right .* idx.cor;
+    con.corRT = idx.rt .* idx.cor;
+    con.rightCorRTVsLeftCorRT = idx.rt .* (idx.left - idx.right) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'AnalysisPercByPercEv')
+    con.faceCorEv = idx.ev .* idx.face .* idx.cor;
+    con.houseCorEv = idx.ev .* idx.house .* idx.cor;
+    con.evCor = idx.ev .* idx.cor;
+    con.faceCorEvVsHouseCorEv = idx.ev .* (idx.face - idx.house) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'AnalysisPercByPercEv_signedByHand')
+    con.leftCorEv = idx.ev .* idx.left .* idx.cor;
+    con.rightCorEv = idx.ev .* idx.right .* idx.cor;
+    con.evCor = idx.ev .* idx.cor;
+    con.rightCorEvVsLeftCorEv = idx.ev .* (idx.left - idx.right) .* idx.cor;
+elseif strcmp(par.thisAnalysis, 'analysisPercByAllConf')
+    con.faceAllConf = idx.conf .* idx.face;
+    con.houseAllConf = idx.conf .* idx.house;
+    con.AllConf = idx.conf;
+    con.faceAllConfVsHouseAllConf = idx.conf .* (idx.face - idx.house);
+elseif strcmp(par.thisAnalysis, 'analysisPercByAllRT')
+    con.faceAllRT = idx.rt .* idx.face;
+    con.houseAllRT = idx.rt .* idx.house;
+    con.AllRT = idx.rt;
+    con.faceAllRTVsHouseAllRT = idx.rt .* (idx.face - idx.house);
+elseif strcmp(par.thisAnalysis, 'analysisRetByAllConf')
+    con.faceAllConf = idx.conf .* idx.face;
+    con.houseAllConf = idx.conf .* idx.house;
+    con.AllConf = idx.conf;
+    con.faceAllConfVsHouseAllConf = idx.conf .* (idx.face - idx.house);
+elseif strcmp(par.thisAnalysis, 'analysisRetByAllRT')
+    con.faceAllRT = idx.rt .* idx.face;
+    con.houseAllRT = idx.rt .* idx.house;
+    con.AllRT = idx.rt;
+    con.faceAllRTVsHouseAllConf = idx.rt .* (idx.face - idx.house);
 else
     error ('unrecognized analysis type')
 end
-    
+
 fn = fieldnames(idx);
 
 
 fn_con = fieldnames(con);
 
-
+fx = 0;
 for f = 1:length(fn_con)
-    cnames{f} = fn_con{f};
-    cvals{f} = con.(fn_con{f});
+    missingTerm = length(find(con.(fn_con{f}))) ~= n.(fn_con{f});
+    
+    if ~missingTerm 
+        fx = fx+1;
+        cnames{fx} = fn_con{f};
+        cvals{fx} = con.(fn_con{f});
+    end
 end
 
 

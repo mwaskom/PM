@@ -373,22 +373,24 @@ function [] = PM_subUtil( par )
 %     
 
 %% Mask a leave-one-out group contrast to isolate a single ROI
-% %conImgs = {'conj_acc_p0.005.img' 'conj_conf_p0.005.img' 'conj_class_p0.005.img'	'conj_rt_p0.005.img'};
-% rois = {'ts_leftAI.nii'	'ts_leftMFG.nii'	'ts_rightAI.nii'};
-% %rois = {'ts_PCC.nii'	'ts_left_AnG.nii'	'ts_left_STG.nii'};
-% 
-% %for c=1:length(conImgs)
-%     for r=1:length(rois)
-%         d{1} = fullfile(par.mnem.analysisdir, 'percMnemConj_parModByConfAndRT_16Subs_1LeftOut', 'conj_RT_p.005_acrossPercAndMnem.img');
-%         d{2} = fullfile('/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/group_analyses/percMnemConj_parModByConfAndRT_16Subs/ROIs_RT', rois{r});
-%         
-%         dirChar = char(d);
-%         outputfile = fullfile(par.mnem.analysisdir, 'percMnemConj_parModByConfAndRT_16Subs_1LeftOut', ['RT_p005_' rois{r}(4:end)]);
-%     
-%         imcalcText = '(i1>0).*(i2>0)';
-%         spm_imcalc_ui(dirChar,outputfile, imcalcText)
-%     end
-% %end
+%conImgs = {'conj_acc_p0.005.img' 'conj_conf_p0.005.img' 'conj_class_p0.005.img'	'conj_rt_p0.005.img'};
+%rois = {'ts_leftAI.nii'	'ts_leftMFG.nii'	'ts_rightAI.nii'};
+%rois = {'ts_PCC.nii'	'ts_left_AnG.nii'	'ts_left_STG.nii'};
+%rois = {'PCC.nii' 'leftSTS.nii' 'rightSFS_invConf.nii' 'leftMTL.nii' 'rightMTL.nii' 'leftParietal.nii' 'rightParietal.nii'};
+%rois = {'LeftIFG.nii' 'rightAnG.nii'};
+rois = {'rightSFS_invConf.nii'};
+%for c=1:length(conImgs)
+    for r=1:length(rois)
+        d{1} = fullfile(par.mnem.analysisdir, 'percMnemConj_parModByConfAndRT_16Subs_1LeftOut', 'conj_ConfAll_p.005_acrossPercAndMnem_leftOut.img');
+        d{2} = fullfile('/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/group_analyses/percMnemConj_parModByConf/ROIs', rois{r});
+        
+        dirChar = char(d);
+        outputfile = fullfile(par.mnem.analysisdir, 'percMnemConj_parModByConfAndRT_16Subs_1LeftOut', ['Conf_p005_' rois{r}]);
+    
+        imcalcText = '(i1<0).*(i2>0)';
+        spm_imcalc_ui(dirChar,outputfile, imcalcText);
+    end
+%end
 
 
 
@@ -415,8 +417,8 @@ function [] = PM_subUtil( par )
 
 %% Move files back from special directory to initial directory
 
-cd (fullfile(par.subdir, 'oldAnalyses'));
-
-movefile('analysis_mvpa_mnemDM_3d', par.subdir);
+% cd (fullfile(par.subdir, 'oldAnalyses'));
+% 
+% movefile('analysis_mvpa_percDMByCoh_3d', par.subdir);
 
 

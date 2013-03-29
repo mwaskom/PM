@@ -26,7 +26,6 @@ if isfield(trial_data,'response')
 end
 
 
-
 if all(isnan(resp_))
         %accept all the trials if we did not collect response
     valid_trials = 1 : trial_num;

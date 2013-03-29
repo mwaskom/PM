@@ -10,14 +10,14 @@ function [S] = PM_subsample(S)
         
         idx = S.idxTr;
 
-        idx.binaryConf = idx.cresp==4;
+        idx.binaryConf = idx.unsignedConf==4;
         idx.toRemoveFaces = zeros(size(idx.face));
         idx.toRemoveHouses = zeros(size(idx.house));
             
         for j=1:4
 
-            idxTheseFaces = (idx.face==1 & idx.cresp==j & idxTrialSubset);
-            idxTheseHouses = (idx.house==1 & idx.cresp==j & idxTrialSubset);
+            idxTheseFaces = (idx.face==1 & idx.unsignedConf==j & idxTrialSubset);
+            idxTheseHouses = (idx.house==1 & idx.unsignedConf==j & idxTrialSubset);
 
             %idxTheseFaces = (idx.face==1 & idx.binaryConf==j & idxTrialSubset);
             %idxTheseHouses = (idx.house==1 & idx.binaryConf==j & idxTrialSubset);
@@ -82,8 +82,8 @@ function [S] = PM_subsample(S)
             error('subsampling error! classes are not balanced');
         end
         
-        meanConfFaces = mean(idx.cresp(logical(~idx.toRemoveHouses .* idxTrialSubsetClass2)));
-        meanConfHouses = mean(idx.cresp(logical(~idx.toRemoveFaces .* idxTrialSubsetClass1)));
+        meanConfFaces = mean(idx.unsignedConf(logical(~idx.toRemoveHouses .* idxTrialSubsetClass2)));
+        meanConfHouses = mean(idx.unsignedConf(logical(~idx.toRemoveFaces .* idxTrialSubsetClass1)));
         
         if S.balanceHiAndLowConf
             meanBinaryConfFaces = mean(idx.binaryConf(logical(~idx.toRemoveHouses .* idxTrialSubsetClass2)));
@@ -93,8 +93,8 @@ function [S] = PM_subsample(S)
                 error('subsampling error! different number of high vs. low confidence trials');
             end
         else
-            meanConfFaces = mean(idx.cresp(logical(~idx.toRemoveHouses .* idxTrialSubsetClass2)));
-            meanConfHouses = mean(idx.cresp(logical(~idx.toRemoveFaces .* idxTrialSubsetClass1)));
+            meanConfFaces = mean(idx.unsignedConf(logical(~idx.toRemoveHouses .* idxTrialSubsetClass2)));
+            meanConfHouses = mean(idx.unsignedConf(logical(~idx.toRemoveFaces .* idxTrialSubsetClass1)));
             
             if meanConfFaces~=meanConfHouses
                 error('subsampling error! confidences are not equated across classes');

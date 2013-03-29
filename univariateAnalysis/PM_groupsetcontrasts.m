@@ -29,15 +29,13 @@ fprintf('\nLoading SPM...');
 load SPM
 fprintf('Done');
 
-Xsize = size(SPM.xX.xKXs.X,2);
-
-padCon = @padConWithZeros;
 
 if par.nCovs>0
     %cnames = {[par.task{tsk}.cons{cnd}.name]; ['inv_' par.task{tsk}.cons{cnd}.name]; [par.task{tsk}.cons{cnd}.name '_byERP']; ['inv_' par.task{tsk}.cons{cnd}.name '_byERP']};
     %cvals = {[1]; [-1]; [0 1]; [0 -1]};
-    cnames = {[par.task{tsk}.cons{cnd}.name '_byERP']; ['inv_' par.task{tsk}.cons{cnd}.name '_byERP']};
-    cvals = {[0 1]; [0 -1]};
+    cnames = {[par.task{tsk}.cons{cnd}.name]; ['inv_' par.task{tsk}.cons{cnd}.name]; ...
+        [par.task{tsk}.cons{cnd}.name '_byCov']; ['inv_' par.task{tsk}.cons{cnd}.name '_byCov']};
+    cvals = {[1]; [-1]; [0 1]; [0 -1]};
 else
     cvals = par.task{tsk}.cons{cnd}.groupContrast;
     cnames = {[par.task{tsk}.cons{cnd}.name] ['inv_' par.task{tsk}.cons{cnd}.name]};

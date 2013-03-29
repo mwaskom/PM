@@ -1,7 +1,7 @@
 
 
 for i = 1:length(subjArray)
-    par = PM_Params(subjArray(i), 'mnem', 0);
+    par = PM_Params(subjArray(i), 'perc', 0);
     
     cd(par.analysisdir);
     

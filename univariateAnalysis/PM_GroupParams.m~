@@ -75,16 +75,11 @@ for t = 1:length(gpar.tasks)
 %         gpar.covName{c} = covName;
         
         nSubs = length(subsToInclude);
-        sCI = 0;
         for s = 1:length(subsToInclude)
             thisAnalysisDir = fullfile(gpar.expt_dir, subsToInclude{s}, gpar.conGroup{t});
-            thisConStruct = load(fullfile(thisAnalysisDir, 'conStruct'));
-            thisConIdx = find(strcmp(thisConStruct.conStruct.con_name,  gpar.task{t}.cons{c}.name));
-            
-            if ~isempty(thisConIdx)
-                sCI = sCI + 1;
-                gpar.task{t}.cons{c}.scans{sCI} = fullfile(thisAnalysisDir,  thisConStruct.conStruct.con_fileName{thisConIdx});
-            end
+            thisConStruct = load(thisAnalysisDir, conStruct);
+            strcmp(thisConStruct.conStruct.con_name, )
+            gpar.task{t}.cons{c}.scans{s} 
         end
         gpar.task{t}.cons{c}.groupContrast = {[1] [-1]};
 

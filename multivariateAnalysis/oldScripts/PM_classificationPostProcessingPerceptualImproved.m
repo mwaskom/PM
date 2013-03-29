@@ -24,7 +24,6 @@ for s = 1:length(qqq.subj)
     %[allOns ~] = sort(vertcat(mvpa_ons.onsets{testRegsIdx}));
     allOns = sort([resS.onsets_test_in_classifier{:}]);
     
-    
     globalSignalDat = load('/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/mvpa_files/MeanSigIntensityInOTCortex');
     globalSig = globalSignalDat.res.subj{s}.penalty.nVox.weights(weights).iter{1}.iterations.acts(1,:);
 

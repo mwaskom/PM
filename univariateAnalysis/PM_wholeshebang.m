@@ -1,4 +1,3 @@
-
 function PM_wholeshebang(subpar, flags)
 % function wholeshebang(subpar, flags)
 % runs an entire subject start to finish.

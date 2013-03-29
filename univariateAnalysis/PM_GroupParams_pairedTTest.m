@@ -4,9 +4,9 @@ function gpar = PM_GroupParams_pairedTTest(SA1,SA2)
 gpar.subjArray1 = SA1;
 gpar.subjArray2 = SA2;
 
-gpar.conGroup1 = {'analysis_perc_parmodByCorConfAndRT'};
-gpar.conGroup2 = {'analysis_mnem_parmodByCorConfAccAndRT'};
-gpar.tasks = {'analysis_percVsMnem_CorConfAndRT_16subs'};
+gpar.conGroup1 = {'analysisPercByAllConf'};
+gpar.conGroup2 = {'analysisRetByAllConf'};
+gpar.tasks = {'analysis_percVsMnem_Conf'};
 gpar.expt_dir = '/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/';
 gpar.modelTemplate = '/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/templates/pairedTTemplate.mat';
 

@@ -30,8 +30,8 @@ S.workspace_dir = [par.subdir '/' 'mvpa_workspace'];
 S.preprocType = 'knk'; % 'spm' for spm preprocessing, 'knk' for kendrick preprocessing
 
 %% tasks
-S.trainTask = 'ret';
-S.testTask = 'ret';
+S.trainTask = 'percloc';
+S.testTask = 'perc';
 
 %% cross-validation scheme
 if strcmp(S.trainTask, S.testTask)
@@ -161,7 +161,7 @@ elseif strcmp(S.testTask,'percloc')
     S.filenames_test = vertcat(par.swrascanfilesByRun{S.TestRuns});
 elseif strcmp(S.testTask, 'perc')
     S.onsetsTestDir = [S.expt_dir S.subj_id '/analysis_mvpa_percDMByCoh_3d'];
-    S.condsTest = {{'face_cor' 'face_inc' } {'house_cor' 'house_inc'}};
+    S.condsTest = {{'face_cor' 'face_inc' 'coh0_resp_face'} {'house_cor' 'house_inc' 'coh0_resp_house'}};
     S.TestRuns = par.scansSelect.(par.task).DM;
     S.durTest = sum(par.(par.task).numvols(S.TestRuns)) * par.TR;
     S.filenames_test = vertcat(par.swrascanfilesByRun{S.TestRuns});
@@ -223,10 +223,10 @@ S.vol_info = spm_vol(fullfile(par.funcdir, 'run01', 'swRrun010030.nii')); %get f
 S.roiWithNonTaksVoxels = fullfile(par.anatdir, 'tnativeOccTemp.nii');
 S.roiWithNonTaksVoxelsName = 'tnativeOccTemp.nii';
 
-S.roi_name = ['parietalNoPostCentral.img'];
-S.roi_file = '/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/masks/parietalNoPostCentral.img';
-%S.roi_file = fullfile(par.anatdir, S.roi_name);
-%S.roi_name = 'twOT_wfu.img';
+%S.roi_name = ['parietalNoPostCentral.img'];
+%S.roi_file = '/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/masks/parietalNoPostCentral.img';
+S.roi_file = '/biac4/wagner/biac3/wagner5/alan/perceptMnemonic/fmri_data/masks/OTnoHipp.img';
+S.roi_name = 'OTnoHipp.img';
 
 %S.roi_name = 'rc1V001.nii';
 %S.roi_file = fullfile(S.anat_dir, S.roi_name);
@@ -285,7 +285,7 @@ S.artdetect_global_signal_thresh = 0; % specify ArtDetect bin for global signal 
 S.remove_outlier_trials = 0;  % on-the-fly outlier detection/removal; specify how many std dev from whole brain mean to exclude as outliers (0 = don't exclude any trials)
 
 %% Importance Maps
-S.generate_importance_maps = 1; %visualize classifier weights
+S.generate_importance_maps = 0; %visualize classifier weights
 S.generateBetaMaps = 1; %use betas, instead of importance values
 S.impType = {'pos' 'neg' 'both' 'raw'}; %importance map types
 S.regNames = {'face' 'house'};
@@ -295,7 +295,7 @@ S.searchlightAnalysis = 0; % run a searchlight analysis
 S.linReg = 0; % run an analysis with a continuous outcome variable
 
 %% Subsample
-S.subsampleToMatch = 1; %subsample trials to match quantities across them.
+S.subsampleToMatch = 0; %subsample trials to match quantities across them.
 S.balanceHiAndLowConf = 0;% match N of hi and low confidence trials?
 
 %% voxel interactions
@@ -349,7 +349,7 @@ S.statmap_funct = 'AG_statmap_anova'; % performance metric
 S.nPlsCompsSet = 0; % number of pls components to include. 0 = do not use pls components.
 S.nFolds = 10; % number of cross validation iterations
 
-S.class_args.nVox = 1000; % number of voxels to select with feature selection e.g. [1000 5000 10000]
+S.class_args.nVox = 0; % number of voxels to select with feature selection e.g. [1000 5000 10000]
 S.class_args.libLin = '-q -s 0 -B 1'; %arguments for liblinear
 S.class_args.libsvm = '-q -s 0 -t 2 -d 3'; % arguments for libsvm
 S.class_args.constant = true; % include a constant term?

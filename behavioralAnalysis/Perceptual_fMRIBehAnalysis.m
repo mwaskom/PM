@@ -25,6 +25,7 @@ trial_num = length(trial_data);
 %extract stim presentation and behavioral variables
 if isfield(trial_data,'response')
     resp = cat(1, trial_data.response);
+    idx.respCode = 2-(trial_data(1).boxmap{2,2}(1)==30);
     
     if strcmp(par.substr, 'pm_031711')
         resp(isnan(resp))=9; %'9' button presses were not recorded for this subject.  Assume that Nans reflect '9' button presses.
@@ -36,25 +37,25 @@ if isfield(trial_data,'response')
         % flipped.
         resp_ = ceil(resp/4);
         cresp_ = 4- (mod(resp-1, 4));
-        idx.respLeft = resp'>4.5;
-        idx.respRight = resp'<4.5;
+        idx.respLeft = ceil(resp/4)'== 3-idx.respCode;
+        idx.respRight = ceil(resp/4)'== idx.respCode;
     elseif ismember(par.substr, { 'pm_031711'})
         % for this subject confidence ratings are inverted.
         resp_ = 3-ceil(resp/4);
         cresp_ = mod(resp-1, 4) + 1;
-        idx.respLeft = resp'<4.5;
-        idx.respRight = resp'>4.5;
+        idx.respLeft = ceil(resp/4)'== idx.respCode;
+        idx.respRight = ceil(resp/4)'== 3-idx.respCode;
     elseif ismember(par.substr, { 'pm_042811_2'})
         % for this subject, the mapping is unique...
         resp_ = 3-ceil(resp/4);
         cresp_ = 5-ceil(abs(resp-4.5));
-        idx.respLeft = resp'<4.5;
-        idx.respRight = resp'>4.5;
+        idx.respLeft = ceil(resp/4)'== idx.respCode;
+        idx.respRight = ceil(resp/4)'== 3-idx.respCode;
     else
         resp_ = 3-ceil(resp/4);
         cresp_ = 4- (mod(resp-1, 4) );
-        idx.respLeft = resp'<4.5;
-        idx.respRight = resp'>4.5;
+        idx.respLeft = ceil(resp/4)'== idx.respCode;
+        idx.respRight = ceil(resp/4)'== 3-idx.respCode;
     end
     
 end
@@ -83,8 +84,6 @@ certRat = zeros(size(resp))';
 for i = 1:8
     certRat(resp==i)=certRatTrans(i);
 end
-
-     
 
 
 if all(isnan(resp_))
@@ -135,7 +134,6 @@ idx.house = (stim_' == 2) .* (coh_'~=0);
 idx.resp_face = resp_' == 1;
 idx.resp_house = resp_' == 2;
 
-
 idx.cor = idx.face .* idx.resp_face + idx.house .* idx.resp_house;
 idx.inc = idx.face .* idx.resp_house + idx.house .* idx.resp_face;
 
@@ -146,8 +144,9 @@ idx.coh_signed = coh_signed';
 idx.signedConf = certRat;
 idx.unsignedConf = ceil(abs(idx.signedConf-4.5));
 idx.conf_binary = 1+(abs(idx.signedConf-4.5)>3);
-
-idx.rt = rt;
+idx.high = idx.conf_binary==2;
+idx.low = idx.conf_binary==1;
+idx.rt = rt';
 
 idx.exceedsRTThresh = rt > rtThresh;
 
@@ -157,7 +156,6 @@ else
     idx.cleanResp = (idx.resp_face + idx.resp_house);
 end
 
-
 idx.coh_set = coh_set;
 idx.coh_set_pct = coh_set*100;
 idx.coh_ = coh_';
@@ -165,6 +163,7 @@ idx.scan_ = scan_';
 
 idx.alltrials =  (scan_'-1).*par.numvols(scan_) * par.TR + stim_on'; 
 idx.junk = ~(idx.cor + idx.inc);
+
 %% results section
 
 %accuracy results

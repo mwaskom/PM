@@ -11,6 +11,9 @@ sa.sa14_CorVsInc = [1 3 6 8 10 11 12 14 16 18 20 21 22];
 sa.sa14_Conf = [1 3 6 8 10 11 12 14 16 18 20 21];
 
 sa.sa16_mnemFaceConf1 = [1 3 6 8 10 11 12 14 15 16 18 21];
+
+sa.sa16_percHandMappingBalanced = [1 2 3 6 8 10 11 12 14 15 16 21];
+
 fn = fieldnames(sa);
 tsk =  {'perc', 'mnem'};
 
